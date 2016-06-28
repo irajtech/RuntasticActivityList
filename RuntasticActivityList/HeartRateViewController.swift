@@ -10,26 +10,45 @@ import UIKit
 
 class HeartRateViewController: UIViewController {
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
+	var appData: UserActivtity!
 
-        // Do any additional setup after loading the view.
-    }
+	@IBOutlet weak var durationSpent: UILabel!
+	var heartDate: HeartRate?
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
+	override func viewDidLoad() {
+		super.viewDidLoad()
 
-    /*
-    // MARK: - Navigation
+		print(appData.id!)
+		ApiController.sharedInstance().fetchHeartRate("user", userID: "2", activityPath: "sport_sessions", userParams: "", sportID: appData.id!, rateTrace: "heart_rate_trace", completionHandler: { (error) in
+			if error == nil {
+				dispatch_async(dispatch_get_main_queue()) {
+					for i in ApiController.sharedInstance().heartRateList! {
+						if ((i.heart_rate >=  140) && (i.heart_rate <= 159)) {
+							let duration: NSDate = NSDate(timeIntervalSince1970: i.duration!)
+							let dateFormatter = NSDateFormatter.rfcDateFormatter()
+							let durationInterval = dateFormatter.stringFromDate(duration)
+							self.durationSpent.text = durationInterval
+						}
+					}
+				}
+			}
+		})
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
+		// Do any additional setup after loading the view.
+	}
 
+	override func didReceiveMemoryWarning() {
+		super.didReceiveMemoryWarning()
+		// Dispose of any resources that can be recreated.
+	}
+
+	/*
+	 // MARK: - Navigation
+
+	 // In a storyboard-based application, you will often want to do a little preparation before navigation
+	 override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+	 // Get the new view controller using segue.destinationViewController.
+	 // Pass the selected object to the new view controller.
+	 }
+	 */
 }

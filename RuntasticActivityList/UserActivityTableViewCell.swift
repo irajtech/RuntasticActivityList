@@ -10,6 +10,12 @@ import UIKit
 
 class UserActivityTableViewCell: UITableViewCell {
 
+   
+    @IBOutlet weak var activityID: UILabel!
+    @IBOutlet weak var sportsID: UILabel!
+    @IBOutlet weak var duration: UILabel!
+    
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
